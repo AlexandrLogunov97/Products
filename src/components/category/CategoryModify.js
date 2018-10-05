@@ -52,10 +52,10 @@ export class CategoryModify extends Component {
             category: newCategory
         });
     }
-    onCreateCategory=(e)=>{
+    onModifyCategory=(e)=>{
     
         if(this.state.category.name)
-            this.props.onCreateCategory(this.state.category);
+            this.props.onModifyCategory(this.state.category);
     }
     render() {
         return (
@@ -64,7 +64,7 @@ export class CategoryModify extends Component {
                 <input onChange={this.onCategoryNameChange} value={this.state.category.name}/>
                 <AttributeList attributes={this.state.category.attributes} onDeleteAttribute={this.onDeleteAttribute}/>
                 <AttributeCreate onCreateAttribute={this.onCreateAttribute} />
-                <button onClick={this.onCreateCategory}>Create category</button>
+                <button onClick={this.onModifyCategory}>Modify category</button>
             </div>
         );
     }

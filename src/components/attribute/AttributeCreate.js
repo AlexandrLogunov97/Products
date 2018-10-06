@@ -7,25 +7,27 @@ export class AttributeCreate extends Component {
     this.state = {
       attribute: {
         name: '',
-        values :[]
+        values: []
       }
     }
   }
   onCreateAttribute = (e) => {
-    if(this.state.attribute.name)
-    {
-      this.props.onCreateAttribute(this.state.attribute);
-      this.setState({
-        attribute:{
-          name: '',
-          values: []
-        }
-      });
+    if (this.state.attribute.name) {
+      let result = this.props.onCreateAttribute(this.state.attribute);
+      console.log(result);
+      if (result) {
+        this.setState({
+          attribute: {
+            name: '',
+            values:[]
+          }
+        })
+      }
     }
   }
   onChangeAttributeName = (e) => {
     this.setState({
-      attribute:{
+      attribute: {
         name: e.target.value,
         values: []
       }
@@ -35,7 +37,7 @@ export class AttributeCreate extends Component {
     return (
       <div className='tree-item'>
         <label>Attribute name:</label><br />
-        <input onChange={this.onChangeAttributeName} value={this.state.attribute.name}/><button onClick={this.onCreateAttribute}>Create attribute</button>
+        <input onChange={this.onChangeAttributeName} value={this.state.attribute.name} /><button onClick={this.onCreateAttribute}>Create attribute</button>
       </div>
     );
   }

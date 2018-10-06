@@ -2,18 +2,20 @@ import React, { Component } from 'react';
 import '../../App.css';
 
 export class AttributeValueCreate extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             attributeValue: ''
         }
     }
     onCreateAttributeValue = (e) => {
-        if(this.state.attributeValue)
-            this.props.onCreateAttributeValue(this.state.attributeValue);
-        this.setState({
-            attributeValue: ''
-        });
+        let result = '';
+        if (this.state.attributeValue)
+            result = this.props.onCreateAttributeValue(this.state.attributeValue);
+        if (result)
+            this.setState({
+                attributeValue: ''
+            });
     }
     onAttributeValueChange = (e) => {
         this.setState({
@@ -24,7 +26,7 @@ export class AttributeValueCreate extends Component {
         return (
             <div className='tree-item'>
                 <label>Create attribute value:</label><br />
-                <input onChange={this.onAttributeValueChange} value={this.state.attributeValue}/><button onClick={this.onCreateAttributeValue}>Create value</button>
+                <input onChange={this.onAttributeValueChange} value={this.state.attributeValue} /><button onClick={this.onCreateAttributeValue}>Create value</button>
             </div>
         );
     }

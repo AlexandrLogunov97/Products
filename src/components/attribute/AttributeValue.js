@@ -25,6 +25,7 @@ export class AttributeValue extends Component {
   }
   onAttributeValueChange=(e)=>{
     let newValue=e.target.value;
+    this.props.onAttributeValueChange(this.state.value,newValue);
     this.setState({
       value: newValue
     });

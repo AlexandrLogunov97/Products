@@ -17,7 +17,7 @@ class App extends Component {
       products: [],
       selectedProduct: {},
       leftMode: 'categories',
-      rightMode: 'createCategory'
+      rightMode: 'modifyCategory'
     }
   }
   genValues(){
@@ -25,20 +25,17 @@ class App extends Component {
     let newValues=[]
     for (let index = 0; index<countValues; index++) {
       newValues.push(`Value ${index+1}`)
-      console.log(`Value ${index+1}`);
     }
     return newValues;
   }
   genAttr(){
     let countAttr=Math.floor(Math.random() * 10);
     let attributes=[];
-    let newValues=this.genValues();
     for (let index = 0; index<countAttr; index++) {
       attributes.push({
         name: `Attribute ${index+1}`,
-        values: newValues
+        values: this.genValues()
       })
-      console.log(`Value ${index+1}`);
     }
     return attributes;
   }
@@ -90,6 +87,7 @@ class App extends Component {
       rightMode: 'modifyCategory'
 
     })
+    console.log(category);
   }
   onSelectMenuItems = (e) => {
 
@@ -136,7 +134,6 @@ class App extends Component {
           <button className='item-left' onClick={this.onSelectRightMode} value='createProduct'>Add product</button>
           <button className='item-left' onClick={this.onSelectLeftMode} value='categories'>Categories</button>
           <button className='item-left' onClick={this.onSelectLeftMode} value='products'>Products</button>
-          <CategorySelectList categories={this.state.categories} />
         </div>
         <br />
         <br />

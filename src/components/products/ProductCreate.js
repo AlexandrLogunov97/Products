@@ -47,7 +47,7 @@ export class ProductCreate extends Component {
                 <label>Product name:</label><br />
                 <input onChange={this.onProductNameChange} value={this.state.product.name} /><br />
                 <label>Category name:</label><br />
-                <CategorySelectList onCategorySelect={this.onCategorySelect} categories={this.props.categories}/><br/>
+                <CategorySelectList onCategorySelect={this.onCategorySelect} categories={this.props.categories}/><br/><br/>
                 {
                     this.state.selectedCategory.attributes.map(attribute=>(
                         <div>

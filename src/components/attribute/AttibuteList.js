@@ -8,7 +8,7 @@ export class AttributeList extends Component {
       <div>
           {
             this.props.attributes.map(( attribute ,index) => (
-              <AttributeEdit key={index} attribute={attribute} onDeleteAttribute={this.props.onDeleteAttribute}/>
+              <AttributeEdit attribute={attribute} onDeleteAttribute={this.props.onDeleteAttribute}/>
             ))
           }
       </div>

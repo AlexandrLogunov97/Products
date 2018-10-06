@@ -38,16 +38,17 @@ export class AttributeEdit extends Component {
     onDeleteAttributeValue = (attributeValue) => {
         let newValues = this.state.attribute.values;
         newValues.splice(newValues.indexOf(attributeValue), 1);
-        let newAttribute=this.state.attribute;
-        newAttribute.values=newValues;
+        let newAttribute = this.state.attribute;
+        newAttribute.values = newValues;
         this.setState({
             attribute: newAttribute
         })
+        console.log(this.state.attribute.name);
     }
     onDeleteAttribute = (e) => {
         this.props.onDeleteAttribute(this.props.attribute);
     }
-    
+
     componentDidUpdate() {
         if (!(this.state.attribute === this.props.attribute)) {
             this.setState({
@@ -62,12 +63,29 @@ export class AttributeEdit extends Component {
             attribute: newAttribute
         });
     }
+    onAttributeValueChange = (oldValue, newValue) => {
+        let findedValue = this.state.attribute.values.find(value => value === newValue);
+        if (!findedValue) {
+
+            let index = this.state.attribute.values.indexOf(oldValue);
+            let newValues = this.state.attribute.values;
+            if (!newValue)
+                newValue = oldValue;
+            newValues[index] = newValue;
+            let newAttribute = this.state.attribute;
+            newAttribute.values = newValues;
+
+            this.setState({
+                attribute: newAttribute
+            });
+        }
+    }
     render() {
         return (
             <div className='tree-item'>
                 <label>Atrtibute name:</label><br />
                 <input onChange={this.onAttributeNameChange} value={this.state.attribute.name} /><button onClick={this.onDeleteAttribute}>x</button>
-                <AttributeValueList attributeValues={this.state.attribute.values} onDeleteAttributeValue={this.onDeleteAttributeValue}/>
+                <AttributeValueList attributeValues={this.state.attribute.values} onAttributeValueChange={this.onAttributeValueChange} onDeleteAttributeValue={this.onDeleteAttributeValue} />
                 <AttributeValueCreate onCreateAttributeValue={this.onCreateAttributeValue} />
             </div>
         );

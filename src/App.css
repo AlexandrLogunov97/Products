@@ -64,12 +64,12 @@
 .menu-list{
   width: 300px;
   overflow-y: scroll;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 64px);
 }
 .panel-right{
   float: left;
   width: calc(100% - 340px);
   scroll-behavior: inherit;
   overflow-y: scroll;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 43px);
 }

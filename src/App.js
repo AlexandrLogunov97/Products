@@ -20,16 +20,38 @@ class App extends Component {
       rightMode: 'createCategory'
     }
   }
+  genValues(){
+    let countValues=Math.floor(Math.random() * 10);
+    let newValues=[]
+    for (let index = 0; index<countValues; index++) {
+      newValues.push(`Value ${index+1}`)
+      console.log(`Value ${index+1}`);
+    }
+    return newValues;
+  }
+  genAttr(){
+    let countAttr=Math.floor(Math.random() * 10);
+    let attributes=[];
+    let newValues=this.genValues();
+    for (let index = 0; index<countAttr; index++) {
+      attributes.push({
+        name: `Attribute ${index+1}`,
+        values: newValues
+      })
+      console.log(`Value ${index+1}`);
+    }
+    return attributes;
+  }
   componentDidMount() {
     let newCategories = [];
-    for (let index = 0; index < 10; index++) {
+    for (let index = 0; index < 5; index++) {
       newCategories.push({
         name: 'Category ' + (index + 1),
-        attributes: [],
+        attributes: this.genAttr(),
       });
     }
     let newProducts = [];
-    for (let index = 0; index < 10; index++) {
+    for (let index = 0; index < 5; index++) {
       newProducts.push({
         name: 'Product ' + (index + 1),
         category: newCategories[0],

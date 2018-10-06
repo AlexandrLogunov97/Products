@@ -4,15 +4,10 @@ import '../../App.css';
 
 
 export class CategorySelectList extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-    onCategoryChange=(e)=>{
+    onCategoryChange = (e) => {
         this.props.onCategorySelect(e.target.value);
     }
     render() {
-        console.log(this.props.categories);
         return (
             <select onChange={this.onCategoryChange}>
                 {

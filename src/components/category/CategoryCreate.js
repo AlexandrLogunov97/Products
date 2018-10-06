@@ -68,7 +68,8 @@ export class CategoryCreate extends Component {
                 <input onChange={this.onCategoryNameChange} value={this.state.category.name} />
                 <AttributeList attributes={this.state.category.attributes} onDeleteAttribute={this.onDeleteAttribute} />
                 <AttributeCreate onCreateAttribute={this.onCreateAttribute} />
-                <button onClick={this.onCreateCategory}>Create category</button>
+                <br/>
+                <button onClick={this.onCreateCategory}>Create category</button>           
             </div>
         );
     }

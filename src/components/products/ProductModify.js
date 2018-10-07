@@ -23,7 +23,6 @@ export class ProductModify extends Component {
     }
     componentDidUpdate(){
         if(!(this.state.product===this.props.product)){
-            console.log(this.props.product.category.attributes)
             this.setState({
                 product: this.props.product
             })

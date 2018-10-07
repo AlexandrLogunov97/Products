@@ -13,13 +13,17 @@ export class CategoryModify extends Component {
             }
         }
     }
+    componentDidMount(){
+        this.setState({
+            category: this.props.category
+        });
+    }
     componentDidUpdate() {
         if (this.props.category)
             if (!(this.state.category === this.props.category)) {
                 this.setState({
                     category: this.props.category
                 });
-
             }
     }
     onCreateAttribute = (attribute) => {
@@ -61,6 +65,9 @@ export class CategoryModify extends Component {
         if (this.state.category.name)
             this.props.onModifyCategory(this.state.category);
     }
+    onDeleteCategory = (e) => {
+        this.props.onDeleteCategory(this.props.category);
+    }
     render() {
         return (
             <div className='tree-item'>
@@ -69,8 +76,8 @@ export class CategoryModify extends Component {
                 <input onChange={this.onCategoryNameChange} value={this.state.category.name} />
                 <AttributeList attributes={this.state.category.attributes} onDeleteAttribute={this.onDeleteAttribute} />
                 <AttributeCreate onCreateAttribute={this.onCreateAttribute} />
-                <br/>
-                <button onClick={this.onModifyCategory}>Modify category</button> <button onClick={this.onModifyCategory}>Delete category</button>
+                <br />
+                <button onClick={this.onModifyCategory}>Modify category</button> <button onClick={this.onDeleteCategory}>Delete category</button>
             </div>
         );
     }

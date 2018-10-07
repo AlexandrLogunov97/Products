@@ -10,7 +10,7 @@ export class ProductMenuItem extends Component {
         }
     }
     onSelectMenuItem=(e)=>{
-        this.props.onSelectMenuItem(this.props.category);
+        this.props.onSelectMenuItem(this.props.product);
     }
     render() {
         return (

@@ -17,8 +17,8 @@ export class ProductMenuList extends Component {
                 <strong>Products:</strong>
                 <div className='menu-list'>
                     {
-                        this.props.products.map((product) => (
-                            <ProductMenuItem product={product} onSelectMenuItem={this.props.onSelectMenuItem} />
+                        this.props.products.map((product,index) => (
+                            <ProductMenuItem key={index} product={product} onSelectMenuItem={this.props.onSelectMenuItem} />
                         ))
                     }
                 </div>

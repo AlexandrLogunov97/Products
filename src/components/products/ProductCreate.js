@@ -7,24 +7,25 @@ import {AttributeValueSelectList} from '../attribute/AttributeValueSelectList';
 export class ProductCreate extends Component {
     constructor(props) {
         super(props);
+        let selectedCategory=this.props.categories?this.props.categories[0]:{};
         this.state = {
             product: {
                 name: '',
-                category: {}
-            },
-            selectedCategory: this.props.categories[0]
+                category: selectedCategory
+            }
         }
     }
     onProductNameChange = (e) => {
-        let newCategory = this.state.category;
-        newCategory.name = e.target.value;
+        let newProduct = this.state.product;
+        newProduct.name = e.target.value;
         this.setState({
-            category: newCategory
+            product: newProduct
         });
     }
     onCreateProduct = (e) => {
         if (this.state.product.name) {
-            let result = this.props.onCreateProduct(this.state.category);
+            let result = this.props.onCreateProduct(this.state.product);
+            
             if (result)
                 this.setState({
                     product: {
@@ -35,28 +36,36 @@ export class ProductCreate extends Component {
         }
     }
     onCategorySelect=(category)=>{
+        let newProduct=this.state.product;
+        newProduct.category=this.props.categories.find(cat=>cat.name===category?cat:null);
         this.setState({
-            selectedCategory: this.props.categories.find(cat=>cat.name===category?cat:null)
+            product: newProduct
         })
     }
     render() {
-        console.log(this.state.selectedCategory.attributes);
+        let categories=this.props.categories?<CategorySelectList onCategorySelect={this.onCategorySelect} categories={this.props.categories}/>:'empty';
+        let attributes=this.props.categories?this.state.product.category.attributes.map(attribute=>(
+            <div>
+                {attribute.name}: <AttributeValueSelectList attribute={attribute}/><br/><br/>
+            </div>
+        )):'Empty';
         return (
             <div className='tree-item'>
                 <h3>Create product</h3>
                 <label>Product name:</label><br />
                 <input onChange={this.onProductNameChange} value={this.state.product.name} /><br />
                 <label>Category name:</label><br />
-                <CategorySelectList onCategorySelect={this.onCategorySelect} categories={this.props.categories}/><br/><br/>
                 {
-                    this.state.selectedCategory.attributes.map(attribute=>(
-                        <div>
-                            {attribute.name}: <AttributeValueSelectList attributeValues={attribute.values}/><br/><br/>
-                        </div>
-                    ))
+                    categories
                 }
+                <br/><br/>
+                Attributes<br/><br/>
+                {
+                  attributes
+                }
+                
                 <br/>
-                <button onClick={this.onCreateCategory}>Create product</button>
+                <button onClick={this.onCreateProduct}>Create product</button>
             </div>
         );
     }

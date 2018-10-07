@@ -4,9 +4,9 @@ import { CategoryMenuList } from './components/category/CategoryMenuList';
 import './App.css';
 import { CategoryCreate } from './components/category/CategoryCreate';
 import { CategoryModify } from './components/category/CategoryModify';
-import { CategorySelectList } from './components/category/CategorySelectList';
 import {ProductMenuList} from './components/products/ProductMenuList';
 import {ProductCreate} from './components/products/ProductCreate';
+import {ProductModify} from './components/products/ProductModify';
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class App extends Component {
       products: [],
       selectedProduct: {},
       leftMode: 'categories',
-      rightMode: 'modifyCategory'
+      rightMode: 'createCategory'
     }
   }
   genValues(){
@@ -67,8 +67,8 @@ class App extends Component {
       let newCategories = this.state.categories;
       newCategories.push(category);
       this.setState({
-        selectedCategory: newCategories[newCategories.length-1],
         rightMode: 'modifyCategory',
+        selectedCategory: newCategories[newCategories.length-1],
         categories: newCategories
       });
       return true;
@@ -81,13 +81,70 @@ class App extends Component {
       categories: newCategories
     });
   }
+  onDeleteCategory=(category)=>{
+    let newCategories = this.state.categories;
+    let index=newCategories.indexOf(category);
+    newCategories.splice(index,1);
+    let newMode='createCategory';
+    let newSelectedCategory={};
+    if(newCategories.length>0){
+      newMode='modifyCategory';
+      newSelectedCategory=newCategories[0];
+    }
+    this.setState({
+      categories: newCategories,
+      rightMode: newMode,
+      selectedCategory:newSelectedCategory
+    });
+  }
   onSelectCategoryMenuItem = (category) => {
     this.setState({
-      selectedCategory: category,
-      rightMode: 'modifyCategory'
-
-    })
-    console.log(category);
+      rightMode: 'modifyCategory',
+      selectedCategory: category
+    });
+  }
+  onSelectProductMenuItem = (product) => {
+    console.log(product);
+    this.setState({
+      rightMode: 'modifyProduct',
+      selectedProduct: product
+    });
+  }
+  onCreateProduct=(product)=>{
+    let findedProduct = this.state.products.find(prod => prod.name.trim().toLowerCase() === product.name.trim().toLowerCase() ? prod : null);
+    if (!findedProduct) {
+      let newProducts = this.state.products;
+      newProducts.push(product);
+      this.setState({
+        rightMode: 'modifyProduct',
+        selectedProduct: newProducts[newProducts.length-1],
+        products: newProducts
+      });
+      return true;
+    }
+  }
+  onModifyProduct=(product)=>{
+    let newProducts = this.state.products;
+    newProducts[newProducts.indexOf(product)] = product;
+    this.setState({
+      products: newProducts
+    });
+  }
+  onDeleteProduct=(product)=>{
+    let newProducts = this.state.products;
+    let index=newProducts.indexOf(product);
+    newProducts.splice(index,1);
+    let newMode='createProduct';
+    let newSelectedProduct={};
+    if(newProducts.length>0){
+      newMode='modifyProduct';
+      newSelectedProduct=newProducts[0];
+    }
+    this.setState({
+      products: newProducts,
+      rightMode: newMode,
+      selectedProduct:newSelectedProduct
+    });
   }
   onSelectMenuItems = (e) => {
 
@@ -97,7 +154,7 @@ class App extends Component {
     if (this.state.leftMode === 'categories') {
       mode = <CategoryMenuList categories={this.state.categories} onSelectMenuItem={this.onSelectCategoryMenuItem} />;
     } else if (this.state.leftMode === 'products') {
-      mode = <ProductMenuList products={this.state.products} />;
+      mode = <ProductMenuList products={this.state.products} onSelectMenuItem={this.onSelectProductMenuItem}/>;
     }
     return mode;
   }
@@ -106,22 +163,54 @@ class App extends Component {
     if (this.state.rightMode === 'createCategory') {
       mode = <CategoryCreate onCreateCategory={this.onCreateCategory} />;
     } else if (this.state.rightMode === 'modifyCategory') {
-      mode = <CategoryModify category={this.state.selectedCategory} onModifyCategory={this.onModifyCategory} />;
+      mode = <CategoryModify onDeleteCategory={this.onDeleteCategory} category={this.state.selectedCategory} onModifyCategory={this.onModifyCategory} />;
     }
     else if (this.state.rightMode === 'createProduct') {
-      mode = <ProductCreate categories={this.state.categories} />;
+      mode = <ProductCreate onCreateProduct={this.onCreateProduct} categories={this.state.categories} />;
+    }
+    else if (this.state.rightMode === 'modifyProduct') {
+      mode = <ProductModify onDeleteProduct={this.onDeleteProduct} product={this.state.selectedProduct} onModifyProduct={this.onModifyProduct} categories={this.state.categories} />;
     }
     return mode;
   }
   onSelectLeftMode = (e) => {
+    let newLeftMode='';
+    let newRightMode='';
+    if(e.target.value==='products'){
+      newLeftMode='products';
+      if(this.state.products.length>0){
+        newRightMode='modifyProduct';
+      }
+      else{
+        newRightMode='createProduct';
+      }
+    }else if(e.target.value==='categories'){
+      newLeftMode='categories';
+      if(this.state.categories.length>0){
+        newRightMode='modifyCategory';
+      }
+      else{
+        newRightMode='createCategory';
+      }
+    }
     this.setState({
-      leftMode: e.target.value
+      leftMode: newLeftMode,
+      rightMode: newRightMode
     });
   }
   onSelectRightMode = (e) => {
-    
+    let newLeftMode='';
+    let newRightMode='';
+    if(e.target.value==='createProduct'){
+      newRightMode='createProduct';
+      newLeftMode='products';
+    }else if(e.target.value==='createCategory'){
+      newRightMode='createCategory';
+      newLeftMode='categories';
+    }
     this.setState({
-      rightMode: e.target.value
+      leftMode: newLeftMode,
+      rightMode: newRightMode
     });
   }
   render() {

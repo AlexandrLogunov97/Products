@@ -11,8 +11,8 @@ export class CategorySelectList extends Component {
         return (
             <select onChange={this.onCategoryChange}>
                 {
-                    this.props.categories.map((category) => (
-                        <CategorySelectItem category={category} onSelectMenuItem={this.props.onSelectMenuItem} />
+                    this.props.categories.map((category,index) => (
+                        <CategorySelectItem key={index} category={category} onSelectMenuItem={this.props.onSelectMenuItem} />
                     ))
                 }
             </select>

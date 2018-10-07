@@ -3,17 +3,16 @@ import { AttributeValueSelectList } from '../attribute/AttributeValueSelectList'
 import '../../App.css';
 
 export class CategorySelectItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: '',
-            attributes: []
-        }
+    getSelected(){
+        if(this.props.categoryName)
+            return this.props.category.name===this.props.categoryName;
+        else
+            return false;
     }
     render() {
         return (
             <React.Fragment>
-                <option>
+                <option selected={this.getSelected()}>
                     {this.props.category.name}
                 </option>
             </React.Fragment>

@@ -7,8 +7,8 @@ export class AttributeValueList extends Component {
     return (
       <div className='tree-item'>
           {
-              this.props.attributeValues.map(attributeValue=>(
-                <AttributeValue value={attributeValue} onAttributeValueChange={this.props.onAttributeValueChange} onDeleteAttributeValue={this.props.onDeleteAttributeValue}/>
+              this.props.attributeValues.map((attributeValue,index)=>(
+                <AttributeValue key={index} value={attributeValue} onAttributeValueChange={this.props.onAttributeValueChange} onDeleteAttributeValue={this.props.onDeleteAttributeValue}/>
               ))
           }
       </div>

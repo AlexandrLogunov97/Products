@@ -3,12 +3,15 @@ import {AttributeValueSelect} from './AttributeValueSelect';
 import '../../App.css';
 
 export class AttributeValueSelectList extends Component {
+  onAttributeValueChange=(e)=>{
+
+  }
   render() {
     return (
-      <select>
+      <select onChange={this.onAttributeValueChange}>
           {
-              this.props.attributeValues.map(attributeValue=>(
-                <AttributeValueSelect value={attributeValue}/>
+              this.props.attribute.values.map((value,index)=>(
+                <AttributeValueSelect key={index} value={value}/>
               ))
           }
       </select>

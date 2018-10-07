@@ -9,7 +9,8 @@ export class AttributeEdit extends Component {
         this.state = {
             attribute: {
                 name: '',
-                values: []
+                values: [],
+                selectedValue: {}
             }
         }
     }

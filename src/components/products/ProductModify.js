@@ -11,7 +11,8 @@ export class ProductModify extends Component {
         this.state = {
             product: {
                 name: '',
-                category: selectedCategory
+                category: selectedCategory,
+                attributes: []
             }
         }
     }
@@ -22,6 +23,7 @@ export class ProductModify extends Component {
     }
     componentDidUpdate(){
         if(!(this.state.product===this.props.product)){
+            console.log(this.props.product.category.attributes)
             this.setState({
                 product: this.props.product
             })
@@ -45,16 +47,24 @@ export class ProductModify extends Component {
     onCategorySelect=(category)=>{
         let newProduct=this.state.product;
         newProduct.category=this.props.categories.find(cat=>cat.name===category?cat:null);
-        console.log(newProduct.category);
+        newProduct.attributes=newProduct.category.attributes;
+        this.setState({
+            product: newProduct
+        })
+    }
+    onAttributeValueChange=(attribute,value)=>{
+        let newProduct=this.state.product;
+        let index=newProduct.category.attributes.indexOf(attribute);
+        newProduct.category.attributes[index].selectedValue=value;
         this.setState({
             product: newProduct
         })
     }
     render() {
-        let categories=this.props.categories && this.state.product.category ?<CategorySelectList onCategorySelect={this.onCategorySelect} categories={this.props.categories}/>:'empty';
+        let categories=this.props.categories && this.state.product.category ?<CategorySelectList categoryName={this.state.product.category.name} onCategorySelect={this.onCategorySelect} categories={this.props.categories}/>:'empty';
         let attributes=this.props.categories && this.state.product.category ?this.state.product.category.attributes.map(attribute=>(
             <div>
-                {attribute.name}: <AttributeValueSelectList attribute={attribute}/><br/><br/>
+                {attribute.name}: <AttributeValueSelectList attribute1={attribute.selectedValue} attribute={attribute} onAttributeValueChange={this.onAttributeValueChange}/><br/><br/>
             </div>
         )):'Empty';
         return (

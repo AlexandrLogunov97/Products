@@ -11,7 +11,8 @@ export class ProductCreate extends Component {
         this.state = {
             product: {
                 name: '',
-                category: selectedCategory
+                category: selectedCategory,
+                attributes: []
             }
         }
     }
@@ -42,11 +43,19 @@ export class ProductCreate extends Component {
             product: newProduct
         })
     }
+    onAttributeValueChange=(attribute,value)=>{
+        let newProduct=this.state.product;
+        let index=newProduct.category.attributes.indexOf(attribute);
+        newProduct.category.attributes[index].selectedValue=value;
+        this.setState({
+            product: newProduct
+        })
+    }
     render() {
         let categories=this.props.categories?<CategorySelectList onCategorySelect={this.onCategorySelect} categories={this.props.categories}/>:'empty';
         let attributes=this.props.categories?this.state.product.category.attributes.map(attribute=>(
             <div>
-                {attribute.name}: <AttributeValueSelectList attribute={attribute}/><br/><br/>
+                {attribute.name}: <AttributeValueSelectList attribute={attribute} onAttributeValueChange={this.onAttributeValueChange}/><br/><br/>
             </div>
         )):'Empty';
         return (

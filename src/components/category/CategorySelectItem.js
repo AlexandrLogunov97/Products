@@ -5,7 +5,10 @@ import '../../App.css';
 export class CategorySelectItem extends Component {
     getSelected(){
         if(this.props.categoryName)
+        {
+            console.log(this.props.categoryName)
             return this.props.category.name===this.props.categoryName;
+        }
         else
             return false;
     }

@@ -11,7 +11,7 @@ export class ProductModify extends Component {
         this.state = {
             product: {
                 name: '',
-                category: selectedCategory,
+                category: selectedCategory,                 
                 attributes: []
             }
         }

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {CategorySelectList} from '../category/CategorySelectList';
 import '../../App.css';
-import {AttributeValueSelectList} from '../attribute/AttributeValueSelectList';
-
+import {AttributeValueModifySelectList} from '../attribute/AttributeValueModifySelectList';
 
 export class ProductCreate extends Component {
     constructor(props) {
@@ -55,7 +54,7 @@ export class ProductCreate extends Component {
         let categories=this.props.categories?<CategorySelectList onCategorySelect={this.onCategorySelect} categories={this.props.categories}/>:'empty';
         let attributes=this.props.categories?this.state.product.category.attributes.map(attribute=>(
             <div>
-                {attribute.name}: <AttributeValueSelectList attribute={attribute} onAttributeValueChange={this.onAttributeValueChange}/><br/><br/>
+                {attribute.name}: <AttributeValueModifySelectList attribute={attribute} onAttributeValueChange={this.onAttributeValueChange}/><br/><br/>
             </div>
         )):'Empty';
         return (

@@ -6,10 +6,11 @@ import { AttributeValueSelectList } from '../attribute/AttributeValueSelectList'
 export class ProductCreate extends Component {
     constructor(props) {
         super(props);
-
+        let date=new Date();
         this.state = {
             product: {
                 name: '',
+                date: date.toDateString(),
                 category: {},
                 attributes: []
             }

@@ -16,7 +16,7 @@ export class ProductMenuItem extends Component {
         return (
             <React.Fragment>
                 <div className='menu-item' onClick={this.onSelectMenuItem}>
-                    <label>{this.props.product.name } ({this.props.product.category.name})</label>
+                    <label>{this.props.product.name } ({this.props.product.category.name},{this.props.product.date})</label>
                 </div>
             </React.Fragment>
         );

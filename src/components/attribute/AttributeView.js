@@ -13,7 +13,6 @@ export class Attribute extends Component {
         }
     }
     componentWillMount(){
-        console.log('updating');
         this.setState({
             attribute: this.props.attribute
         });

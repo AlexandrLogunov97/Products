@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import {CategorySelectList} from '../category/CategorySelectList';
 import '../../App.css';
-import {AttributeValueSelectList} from '../attribute/AttributeValueSelectList';
+import {AttributeValueModifySelectList} from '../attribute/AttributeValueModifySelectList';
 
 
 export class ProductModify extends Component {
     constructor(props) {
         super(props);
         let selectedCategory=this.props.categories?this.props.categories[0]:{};
+        selectedCategory=Object.assign({},selectedCategory);
+        let newAttributes=[];
+        selectedCategory.attributes.map(attribute=>{
+            newAttributes.push({
+                attributeName: attribute.name,
+                selectedValue: ''
+            });
+        })
         this.state = {
             product: {
                 name: '',
-                category: selectedCategory,                 
-                attributes: []
+                category: selectedCategory,
+                attributes: newAttributes
             }
         }
     }
@@ -22,7 +30,7 @@ export class ProductModify extends Component {
         })
     }
     componentDidUpdate(){
-        if(!(this.state.product===this.props.product)){
+       if(!(this.state.product===this.props.product)){
             this.setState({
                 product: this.props.product
             })
@@ -45,25 +53,40 @@ export class ProductModify extends Component {
     }
     onCategorySelect=(category)=>{
         let newProduct=this.state.product;
-        newProduct.category=this.props.categories.find(cat=>cat.name===category?cat:null);
-        newProduct.attributes=newProduct.category.attributes;
+        let newAttributes=[];
+        newProduct.category=Object.assign({},this.props.categories.find(cat=>cat.name===category?cat:null));
+        newProduct.category.attributes.forEach(attribute=>{
+            newAttributes.push({
+                attributeName: attribute.name,
+                selectedValue: ''
+            });
+        });
         this.setState({
             product: newProduct
         })
     }
     onAttributeValueChange=(attribute,value)=>{
         let newProduct=this.state.product;
-        let index=newProduct.category.attributes.indexOf(attribute);
-        newProduct.category.attributes[index].selectedValue=value;
+        console.log(this.state.product);
+        let findedAttribute=newProduct.attributes.find(attr=>attribute.name===attr.attributeName);
+        let index=newProduct.attributes.indexOf(findedAttribute);
+        newProduct.attributes[index].selectedValue=value;
         this.setState({
             product: newProduct
         })
+    }
+    getSelectedValueByAttribute(attributeName){
+        console.log(this.state.product);
+        let newProduct=this.state.product;
+        let findedAttribute=newProduct.attributes.find(attr=>attributeName===attr.attributeName);
+        let index=newProduct.attributes.indexOf(findedAttribute);
+        return newProduct.attributes[index].selectedValue?newProduct.attributes[index].selectedValue:'';
     }
     render() {
         let categories=this.props.categories && this.state.product.category ?<CategorySelectList categoryName={this.state.product.category.name} onCategorySelect={this.onCategorySelect} categories={this.props.categories}/>:'empty';
         let attributes=this.props.categories && this.state.product.category ?this.state.product.category.attributes.map(attribute=>(
             <div>
-                {attribute.name}: <AttributeValueSelectList attribute1={attribute.selectedValue} attribute={attribute} onAttributeValueChange={this.onAttributeValueChange}/><br/><br/>
+                {attribute.name}: <AttributeValueModifySelectList selectedValue={this.getSelectedValueByAttribute(attribute.name)} attribute={attribute} onAttributeValueChange={this.onAttributeValueChange}/><br/><br/>
             </div>
         )):'Empty';
         return (

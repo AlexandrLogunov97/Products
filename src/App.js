@@ -21,7 +21,7 @@ class App extends Component {
     }
   }
   genValues(){
-    let countValues=Math.floor(Math.random() * 10)+1;
+    let countValues=Math.floor(Math.random() * 4)+1;
     let newValues=[]
     for (let index = 0; index<countValues; index++) {
       newValues.push(`Value ${index+1}`)
@@ -29,7 +29,7 @@ class App extends Component {
     return newValues;
   }
   genAttr(){
-    let countAttr=Math.floor(Math.random() * 10)+1;
+    let countAttr=Math.floor(Math.random() * 3)+1;
     let attributes=[];
     for (let index = 0; index<countAttr; index++) {
       attributes.push({
@@ -40,34 +40,18 @@ class App extends Component {
     return attributes;
   }
   componentDidMount() {
-    /*let newCategories = [];
+    let newCategories = [];
     for (let index = 0; index < 100; index++) {
       newCategories.push({
         name: 'Category ' + (index + 1),
         attributes: this.genAttr(),
       });
     }
-    let newProducts = [];
-    let newAttributes=[];
-    newAttributes.push({
-      attributeName: newCategories[0].attributes[0].name,
-      selectedValue: newCategories[0].attributes[0].values[0]
-    })
-
-    for (let index = 0; index < 5; index++) {
-      newProducts.push({
-        name: 'Product ' + (index + 1),
-        category: newCategories[0],
-        attributes: newAttributes
-      });
-    }
     this.setState({
       categories: newCategories,
-      products: newProducts,
-      selectedCategory: newCategories[0],
-      selectedProduct: newProducts[0]
+      selectedCategory: newCategories[0]
     });
-    */
+  
   }
   onCreateCategory = (category) => {
     let findedCategory = this.state.categories.find(cat => cat.name.trim().toLowerCase() === category.name.trim().toLowerCase() ? cat : null);
@@ -112,7 +96,6 @@ class App extends Component {
     });
   }
   onSelectProductMenuItem = (product) => {
-    console.log(product);
     this.setState({
       rightMode: 'modifyProduct',
       selectedProduct: product

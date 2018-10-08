@@ -44,7 +44,6 @@ export class AttributeEdit extends Component {
         this.setState({
             attribute: newAttribute
         })
-        console.log(this.state.attribute.name);
     }
     onDeleteAttribute = (e) => {
         this.props.onDeleteAttribute(this.props.attribute);

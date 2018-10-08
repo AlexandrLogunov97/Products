@@ -14,7 +14,6 @@ export class AttributeCreate extends Component {
   onCreateAttribute = (e) => {
     if (this.state.attribute.name) {
       let result = this.props.onCreateAttribute(this.state.attribute);
-      console.log(result);
       if (result) {
         this.setState({
           attribute: {

@@ -30,7 +30,6 @@ export class CategoryModify extends Component {
         let findedAttribute = this.state.category.attributes
             .find(attr => attr.name.trim().toLowerCase() === attribute.name.trim().toLowerCase() ? attr : null);
         if (!findedAttribute) {
-            console.log(this.state.category.attributes);
             let newAttributes = this.state.category.attributes;
             newAttributes.push(attribute);
             this.setState({
